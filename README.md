@@ -7,7 +7,7 @@ Simplify sending LINE messages using Messaging API for Laravel
 [![Total Downloads](https://img.shields.io/packagist/dt/ratiw/linemessaging.svg?style=flat-square)](https://packagist.org/packages/ratiw/linemessaging)
 
 
-> This package was developed to replace the use LINE Notify.
+> This package was developed to replace the use LINE Notify
 > as it will be discontinued on March 31, 2025.
 
 ## Basic Usage
@@ -73,11 +73,95 @@ composer require ratiw/line-messaging
 
 ## Usage
 
+Use the `LineMessaging::channel()` to specify the channel access token and **chain** one of the following methods to specify the target user, group, or room.
+- `toUser`("USER_ID")
+- `toGroup`("GROUP_ID")
+- `toRoom`("ROOM_ID")
+
+Then, chain one of the available message types to send the message.
+
+### Sending text message
+`text(string $message, $emojis = [], string $quoteToken = null)`
 ```php
-// Usage description here
+// send a text message to a user
+LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
+    ->toUser('USER_ID')
+    ->text('Hello, world!');
+
+// send a text message to a group chat
+LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
+    ->toGroup('GROUP_ID')
+    ->text('Hello, world!');
 ```
 
-### Changelog
+### Sending text message with emojis
+To include emojis in the text message, you have to specify the emoji placeholders in the text message. 
+
+The placeholder is the `$` character in the message.
+
+Then, you have to includes an array of emoji objects in the second argument.
+
+Each emoji object must have the following keys:
+- `productId`: The product ID of the emoji.
+- `emojiId`: The emoji ID of the emoji.
+
+```php
+LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
+    ->toUser('USER_ID')
+    ->text('$ Happy birthday! $', [
+        ['productId' => '5ac2213e040ab15980c9b447', 'emojiId' => '007'],
+        ['productId' => '5ac2213e040ab15980c9b447', 'emojiId' => '009'],
+    ]);
+```
+
+See 
+- LINE emojis [here](https://developers.line.biz/en/docs/messaging-api/emoji-list/).
+- LINE text message type [here](https://developers.line.biz/en/docs/messaging-api/message-types/#text-messages).
+- LINE text message reference [here](https://developers.line.biz/en/reference/messaging-api/#text-message).
+
+
+
+### Sending sticker
+`sticker(packageId, stickerId)`
+```php
+LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
+    ->toGroup('GROUP_ID')
+    ->sticker('6359', '11069851');
+```
+
+See 
+- LINE stickers list [here](https://developers.line.biz/en/docs/messaging-api/sticker-list/).
+- LINE sticker message type [here](https://developers.line.biz/en/docs/messaging-api/message-types/#sticker-messages).
+- LINE sticker message reference [here](https://developers.line.biz/en/reference/messaging-api/#sticker-message).
+
+### Sending image
+`image(string $imageUrl, string $previewUrl = null)`
+```php
+LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
+    ->toGroup('GROUP_ID')
+    ->image('https://example.com/image.jpg', 'https://example.com/image_preview.jpg');
+```
+> **Note**
+> - `previewUrl` is optional.
+> - given URL must be `https` scheme
+
+See 
+- LINE images message type [here](https://developers.line.biz/en/docs/messaging-api/message-types/#image-messages).
+- LINE image message reference [here](https://developers.line.biz/en/reference/messaging-api/#image-message).
+
+### Sending video
+`video(string $videoUrl, string $previewUrl = null, string $trackingId = null)`
+```php
+LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
+    ->toUser('USER_ID')
+    ->video('https://example.com/video.mp4', 'https://example.com/video_preview.jpg', 'TRACKING_ID');
+```
+> **Note**
+> - `previewUrl` and `trackingId` are optional.
+> - given URL must be `https` scheme
+
+
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
