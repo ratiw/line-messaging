@@ -84,7 +84,7 @@ Then, chain one of the available message types to send the message.
 - `text`(message, emojis, quoteToken)
 - `sticker`(packageId, stickerId)
 - `image`(imageUrl, previewUrl)
-- `video`(videoUrl, previewUrl, trackingId)
+- `video`(videoUrl, previewImageUrl, trackingId)
 - `audio`(audioUrl, duration)
 - `location`(title, address, latitude, longitude)
 
@@ -164,14 +164,14 @@ See
 ---
 
 ### Sending video
-`video(string $videoUrl, string $previewUrl = null, string $trackingId = null)`
+`video(string $videoUrl, string $previewImageUrl = null, string $trackingId = null)`
 ```php
 LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
     ->toUser('USER_ID')
     ->video('https://example.com/video.mp4', 'https://example.com/video_preview.jpg', 'TRACKING_ID');
 ```
 > **Note**
-> - `previewUrl` and `trackingId` are optional.
+> - `previewImageUrl` and `trackingId` are optional.
 > - given URL must be `https` scheme
 
 ---
@@ -197,6 +197,10 @@ LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
     ->location('MOCA Bangkok', '499 Kamphaeng Phet 6 Rd, Lat Yao, Chatuchak, Bangkok 10900', 13.853197788942376, 100.56302862528158);
 ```
 
+## Testing
+```bash
+composer test
+```
 
 ## Changelog
 
