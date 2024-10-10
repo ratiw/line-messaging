@@ -163,4 +163,30 @@ class LineMessaging
 
         return $this->apiPost([$message]);
     }
+
+    public function audio(string $audioUrl, int $duration): Response
+    {
+        $this->type = 'audio';
+        $message = collect([
+            'type' => $this->type,
+            'originalContentUrl' => $audioUrl,
+            'duration' => $duration,
+        ])->toArray();
+
+        return $this->apiPost([$message]);
+    }
+
+    public function location(string $title, string $address, float $latitude, float $longitude): Response
+    {
+        $this->type = 'location';
+        $message = collect([
+            'type' => $this->type,
+            'title' => $title,
+            'address' => $address,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+        ])->toArray();
+
+        return $this->apiPost([$message]);
+    }
 }
