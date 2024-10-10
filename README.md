@@ -59,6 +59,8 @@ This package currently supports the following message types:
 - Sticker
 - Image
 - Video
+- Audio
+- Location
 
 More might be added in the future, but no promises here. :smiley:
 
@@ -79,6 +81,12 @@ Use the `LineMessaging::channel()` to specify the channel access token and **cha
 - `toRoom`("ROOM_ID")
 
 Then, chain one of the available message types to send the message.
+- `text`(message, emojis, quoteToken)
+- `sticker`(packageId, stickerId)
+- `image`(imageUrl, previewUrl)
+- `video`(videoUrl, previewUrl, trackingId)
+- `audio`(audioUrl, duration)
+- `location`(title, address, latitude, longitude)
 
 ### Sending text message
 `text(string $message, $emojis = [], string $quoteToken = null)`
