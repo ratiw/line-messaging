@@ -94,6 +94,8 @@ LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
     ->text('Hello, world!');
 ```
 
+---
+
 ### Sending text message with emojis
 To include emojis in the text message, you have to specify the emoji placeholders in the text message. 
 
@@ -119,7 +121,7 @@ See
 - LINE text message type [here](https://developers.line.biz/en/docs/messaging-api/message-types/#text-messages).
 - LINE text message reference [here](https://developers.line.biz/en/reference/messaging-api/#text-message).
 
-
+---
 
 ### Sending sticker
 `sticker($packageId, $stickerId)`
@@ -133,6 +135,8 @@ See
 - LINE stickers list [here](https://developers.line.biz/en/docs/messaging-api/sticker-list/).
 - LINE sticker message type [here](https://developers.line.biz/en/docs/messaging-api/message-types/#sticker-messages).
 - LINE sticker message reference [here](https://developers.line.biz/en/reference/messaging-api/#sticker-message).
+
+---
 
 ### Sending image
 `image(string $imageUrl, string $previewUrl = null)`
@@ -149,6 +153,8 @@ See
 - LINE images message type [here](https://developers.line.biz/en/docs/messaging-api/message-types/#image-messages).
 - LINE image message reference [here](https://developers.line.biz/en/reference/messaging-api/#image-message).
 
+---
+
 ### Sending video
 `video(string $videoUrl, string $previewUrl = null, string $trackingId = null)`
 ```php
@@ -159,6 +165,29 @@ LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
 > **Note**
 > - `previewUrl` and `trackingId` are optional.
 > - given URL must be `https` scheme
+
+---
+
+### Sending audio
+`audio(string $audioUrl, int $duration)`
+```php
+LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
+    ->toUser('USER_ID')
+    ->audio('https://example.com/video.m4a', 50000);
+```
+> **Note**
+> - given URL must be `https` scheme
+> - `duration` is in milliseconds
+
+---
+
+### Sending location
+`location(string $title, string $address, float $latitude, float $longitude)`
+```php
+LineMessaging::channel('YOUR_CHANNEL_ACCESS_TOKEN')
+    ->toUser('USER_ID')
+    ->location('MOCA Bangkok', '499 Kamphaeng Phet 6 Rd, Lat Yao, Chatuchak, Bangkok 10900', 13.853197788942376, 100.56302862528158);
+```
 
 
 ## Changelog
