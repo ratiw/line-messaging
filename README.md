@@ -3,8 +3,8 @@
 Simplify sending LINE messages using Messaging API for Laravel
 
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/ratiw/line-messaging.svg?style=flat-square)](https://packagist.org/packages/ratiw/linemessaging)
-[![Total Downloads](https://img.shields.io/packagist/dt/ratiw/line-messaging.svg?style=flat-square)](https://packagist.org/packages/ratiw/linemessaging)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ratiw/line-messaging.svg?style=flat-square)](https://packagist.org/packages/ratiw/line-messaging)
+[![Total Downloads](https://img.shields.io/packagist/dt/ratiw/line-messaging.svg?style=flat-square)](https://packagist.org/packages/ratiw/line-messaging)
 
 
 > This package was developed to replace the use LINE Notify
