@@ -3,11 +3,11 @@
     "description": "Simplify sending LINE messages using Messaging API.",
     "keywords": [
         "ratiw",
-        "LINE ",
-        "LINE Messaging",
-        "LINE Notify",
+        "line-",
+        "line-messaging",
+        "line-notify",
         "PHP",
-        "Laravel"
+        "laravel"
     ],
     "homepage": "https://github.com/ratiw/line-messaging",
     "license": "MIT",
