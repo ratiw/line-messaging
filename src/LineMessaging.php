@@ -22,6 +22,11 @@ class LineMessaging
         $this->channelToken = $channelToken;
     }
 
+    public static function getApiUrl(): string
+    {
+        return static::API_URL;
+    }
+
     public static function channel($channelToken): self
     {
         return new static($channelToken);
@@ -75,7 +80,7 @@ class LineMessaging
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->channelToken,
             ])->when(!empty($this->retryKey), function ($collection){
-                $collection->put('X-Line-Retry-Key', $this->retryKey);
+                return $collection->put('X-Line-Retry-Key', $this->retryKey);
             })->toarray()
         )->post(self::API_URL, [
             'to' => $this->getSource(),
@@ -83,7 +88,7 @@ class LineMessaging
         ]);
     }
 
-    public function text(string $message, array $emojis = [], string $quoteToken = null): Response
+    public function text(string $message, array $emojis = [], string $quoteToken = ''): Response
     {
         $this->type = 'text';
         $indexes = $this->findStrPosAll($message, '$');
@@ -100,10 +105,10 @@ class LineMessaging
         $message = collect([
             'type' => $this->type,
             'text' => $message,
-        ])->when($quoteToken, function ($collection) use ($quoteToken) {
-            $collection->put('quoteToken', $quoteToken);
-        })->when(count($emojis), function ($collection) use ($emojis) {
-            $collection->put('emojis', $emojis);
+        ])->when(count($emojis), function ($collection) use ($emojis) {
+            return $collection->put('emojis', $emojis);
+        })->when(!empty($quoteToken), function ($collection) use ($quoteToken) {
+            return $collection->put('quoteToken', $quoteToken);
         })->toArray();
 
         return $this->apiPost([$message]);
@@ -151,14 +156,15 @@ class LineMessaging
         return $this->apiPost($messages);
     }
 
-    public function video(string $videoUrl, string $previewUrl = null, string $trackingId = null): Response
+    public function video(string $videoUrl, string $previewImageUrl = null, string $trackingId = null): Response
     {
         $this->type = 'video';
         $message = collect([
             'type' => $this->type,
             'originalContentUrl' => $videoUrl,
-            'previewImageUrl' => $previewUrl ?? $videoUrl,
-        ])->when($trackingId, fn ($collection) => $collection->put('trackingId', $trackingId))
+            'previewImageUrl' => $previewImageUrl ?? $videoUrl,
+        ])
+        ->when($trackingId, fn ($collection) => $collection->put('trackingId', $trackingId))
         ->toArray();
 
         return $this->apiPost([$message]);
